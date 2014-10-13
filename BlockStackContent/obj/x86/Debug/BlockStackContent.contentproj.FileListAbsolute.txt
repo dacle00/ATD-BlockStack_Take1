@@ -1,0 +1,7 @@
+C:\Users\vanproyaa\Documents\GitHub\BlockStack\BlockStack\BlockStackContent\obj\x86\Debug\BlockStackContent.contentprojResolveAssemblyReference.cache
+E:\GitHub\BlockStack\BlockStack\BlockStackContent\obj\x86\Debug\BlockStackContent.contentprojResolveAssemblyReference.cache
+C:\Users\dbry\Documents\GitHub\BlockStack\BlockStack\BlockStackContent\obj\x86\Debug\BlockStackContent.contentprojResolveAssemblyReference.cache
+C:\Users\Andrew\Documents\GitHub\BlockStack\BlockStack\BlockStackContent\obj\x86\Debug\BlockStackContent.contentprojResolveAssemblyReference.cache
+C:\Users\F1tZ\Documents\GitHub\BlockStack\BlockStack\BlockStackContent\obj\x86\Debug\BlockStackContent.contentprojResolveAssemblyReference.cache
+F:\Documents\Visual Studio 2010\Projects\GDev\AfterThoughTetris\BlockStack\BlockStack\BlockStackContent\obj\x86\Debug\BlockStackContent.contentprojResolveAssemblyReference.cache
+F:\Documents\Visual Studio 2010\Projects\GDev\AfterThoughTetris\xBlocks\BlockStack_take1\BlockStackContent\obj\x86\Debug\BlockStackContent.contentprojResolveAssemblyReference.cache
