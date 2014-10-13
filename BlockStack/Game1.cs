@@ -1,3 +1,10 @@
+///////////////////////////////////////////////////////////////////////////////////////////
+// Game1 class is the XNA Project's Generic entry point. Woo.
+//
+// AUTHORS: F1tZ, DoubleMintBen, CptSpaceToaster, Dacle
+// COMPANY: AfterThough Digital
+// STARTED: October, 2014
+//
 using System;
 using System.Collections.Generic;
 using System.Linq;

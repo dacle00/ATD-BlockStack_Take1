@@ -1,4 +1,13 @@
-﻿using System;
+﻿///////////////////////////////////////////////////////////////////////////////////////////
+// BlockBag class acts as a tetromino generating factory, handling the "random" aspect of
+// presenting the game with the next piece for play.
+//
+// AUTHORS: F1tZ, DoubleMintBen, CptSpaceToaster, Dacle
+// COMPANY: AfterThough Digital
+// STARTED: October, 2014
+//
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

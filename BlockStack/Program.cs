@@ -1,4 +1,10 @@
-using System;
+///////////////////////////////////////////////////////////////////////////////////////////
+// Program class is the XNA Project's Generic entry point. Woo.
+//
+// AUTHORS: F1tZ, DoubleMintBen, CptSpaceToaster, Dacle
+// COMPANY: AfterThough Digital
+// STARTED: October, 2014
+//
 
 namespace BlockStack
 {

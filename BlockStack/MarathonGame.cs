@@ -1,4 +1,14 @@
-﻿using System;
+﻿///////////////////////////////////////////////////////////////////////////////////////////
+// MarathonGame class represents the tetris game mode: "Marathon" and all inheirent rules.
+// In Marathon game mode, player continues raising score through each level (increasing the
+// speed of play) until screen is filled (Game Over).
+//
+// AUTHORS: F1tZ, DoubleMintBen, CptSpaceToaster, Dacle
+// COMPANY: AfterThough Digital
+// STARTED: October, 2014
+//
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,35 +21,44 @@ namespace BlockStack
 { 
     class MarathonGame
     {
+        ///////////////////////////////////////////////////////////////////////////////////////////
         // global variables
-        int levelNumber;
-        float stepTime;
+
+        // Screen
         int boardWidth;
         int boardHeight;
         GameBoard theBoard;
-
-        List<Tetromino> availablePieces;
-        KeyboardState previousState;
-        GamePadState previousPadState;
-        Tetromino currentPiece;
-        Tetromino nextPiece;  // TODO:  make array[3] ??
-        Vector2 pieceStartingPosition;
-        Vector2 nextPieceDisplayPosition;
-        const int blockWidth = 32;
-        const int blockHeight = 32;
-        BlockBag tetrisPieceFactory;
-        GameTime lastTimeDropped;
-        GameTime lastTimeUpdate;
-
-        Rectangle playFieldBounds = new Rectangle(20, 100, 320, 640);
+        public const int offsetPlayFieldX = 20;
+        public const int offsetPlayFieldY = 100;
+        Rectangle playFieldBounds = new Rectangle(offsetPlayFieldX, offsetPlayFieldY, 320, 640);
         Rectangle scoreFieldBounds = new Rectangle(20, 20, 500, 60);
         Rectangle nextPieceFieldBounds = new Rectangle(360, 100, 160, 160);
 
-        int score = 4000;
+        // Game Pieces
+        List<Tetromino> availablePieces;  // a list containing 1 of each possible unique tetromino piece
+        Tetromino currentPiece;  // the piece in play, dropping down the gameboard
+        Tetromino nextPiece;  // TODO:  make array[3] to see further ahead??
+        Vector2 pieceStartingPosition = new Vector2(offsetPlayFieldX + (5 * blockwidth), offsetPlayFieldY + (0 * blockwidth));
+        Vector2 nextPieceDisplayPosition = new Vector2(376f, 116f); //within the box, the 4x4 grid is displayed plus a 16 pixel padding on each side;
+        const int blockwidth = 32;  //got rid of separate width/height vars as we're dealing with squares, right???
+        BlockBag tetrisPieceFactory;  //gives another "random" tetris piece, used to get next pieces.
+
+        // Leveling/Score
+        int levelNumber;
+        float stepTime;
+        int score = 1123;
         SpriteFont scoreFont = null;
         Vector2 scoreFontPosition = new Vector2(22, 22);
         string scoreString;
 
+        // User Input
+        KeyboardState previousKeyState;
+        GamePadState previousPadState;
+        GameTime lastTimeDropped;
+        GameTime lastTimeUpdate;
+
+        ///////////////////////////////////////////////////////////////////////////////////////////
+        // New MarathonGame constructor - 
 
         public MarathonGame(int pLevel, ContentManager pContentManager)
         {
@@ -58,44 +77,41 @@ namespace BlockStack
         public virtual void Load( ContentManager pContentManager)
         {
             Texture2D blockTexture = pContentManager.Load<Texture2D>("CustomImages\\aviBlock1");
-            Tetromino tmpShape;
-            pieceStartingPosition = new Vector2(5f, 0f);
-            nextPieceDisplayPosition = new Vector2(376f, 116f);
             availablePieces = new List<Tetromino>();
 
             // SHAPE I
-            tmpShape = new ShapeI();
-            tmpShape.constructPiece(Color.LightGray, blockWidth, blockHeight, blockTexture);
+            Tetromino tmpShape = new ShapeI();
+            tmpShape.constructPiece(Color.LightGray, blockwidth, blockTexture);
             availablePieces.Add(tmpShape);
 
             // SHAPE O 
             tmpShape = new ShapeO();
-            tmpShape.constructPiece(Color.Yellow, blockWidth, blockHeight, blockTexture);
+            tmpShape.constructPiece(Color.Yellow, blockwidth, blockTexture);
             availablePieces.Add(tmpShape);
 
             // SHAPE Z
             tmpShape = new ShapeZ();
-            tmpShape.constructPiece(Color.Red, blockWidth, blockHeight, blockTexture);
+            tmpShape.constructPiece(Color.Red, blockwidth, blockTexture);
             availablePieces.Add(tmpShape);
 
             // SHAPE T 
             tmpShape = new ShapeT();
-            tmpShape.constructPiece(Color.Purple, blockWidth, blockHeight, blockTexture);
+            tmpShape.constructPiece(Color.Purple, blockwidth, blockTexture);
             availablePieces.Add(tmpShape);
 
             // SHAPE J 
             tmpShape = new ShapeJ();
-            tmpShape.constructPiece(Color.LightBlue, blockWidth, blockHeight, blockTexture);
+            tmpShape.constructPiece(Color.LightBlue, blockwidth, blockTexture);
             availablePieces.Add(tmpShape);
 
             // SHAPE S 
             tmpShape = new ShapeS();
-            tmpShape.constructPiece(Color.Green, blockWidth, blockHeight, blockTexture);
+            tmpShape.constructPiece(Color.Green, blockwidth, blockTexture);
             availablePieces.Add(tmpShape);
 
             // SHAPE L 
             tmpShape = new ShapeL();
-            tmpShape.constructPiece(Color.Orange, blockWidth, blockHeight, blockTexture);
+            tmpShape.constructPiece(Color.Orange, blockwidth, blockTexture);
             availablePieces.Add(tmpShape);
 
             // Start the RandomBag of Pieces, supplying a complete List of all potentialy available pieces for this game:
@@ -128,7 +144,7 @@ namespace BlockStack
                 nextPiece.Draw(gt, sb);
 
             // draw score
-            scoreString = "Your score is OVER: " + score;
+            scoreString = "Score:  " + score;
             sb.DrawString(scoreFont, scoreString, scoreFontPosition, Color.Teal);
         }
 
@@ -173,50 +189,50 @@ namespace BlockStack
                 {
                     #region Keyboard input
                     KeyboardState currentState = Keyboard.GetState();
-                    if (currentState.IsKeyDown(Keys.Left) && !previousState.IsKeyDown(Keys.Left))
+                    if (currentState.IsKeyDown(Keys.Left) && !previousKeyState.IsKeyDown(Keys.Left))
                     {
                         //move piece left, if no collision
                         if (currentPiece.position.X > 1)
                         {
                             // move piece left 
-                            currentPiece.position.X -= blockWidth;
+                            currentPiece.position.X -= blockwidth;
                         }
                         else
                         {
                             // feedback?  User requested illegal move
                         }
                     }
-                    if (currentState.IsKeyDown(Keys.Right) && !previousState.IsKeyDown(Keys.Right))
+                    if (currentState.IsKeyDown(Keys.Right) && !previousKeyState.IsKeyDown(Keys.Right))
                     {
                         if (currentPiece.position.X < 10)
                         {
                             // move piece left 
-                            currentPiece.position.X += blockWidth;
+                            currentPiece.position.X += blockwidth;
                         }
                         else
                         {
                             // feedback?  User requested illegal move
                         }
                     }
-                    if (currentState.IsKeyDown(Keys.Down) && !previousState.IsKeyDown(Keys.Down))
+                    if (currentState.IsKeyDown(Keys.Down) && !previousKeyState.IsKeyDown(Keys.Down))
                     {
-                        if (currentPiece.position.Y + blockHeight < playFieldBounds.Bottom)
+                        if (currentPiece.position.Y + blockwidth < playFieldBounds.Bottom)
                         {
-                            currentPiece.position.Y += blockHeight;
+                            currentPiece.position.Y += blockwidth;
                         }
                     }
 
-                    if (currentState.IsKeyDown(Keys.A) && !previousState.IsKeyDown(Keys.A))
+                    if (currentState.IsKeyDown(Keys.A) && !previousKeyState.IsKeyDown(Keys.A))
                     {
                         currentPiece.Rotate(false);
                     }
 
-                    if (currentState.IsKeyDown(Keys.S) && !previousState.IsKeyDown(Keys.S))
+                    if (currentState.IsKeyDown(Keys.S) && !previousKeyState.IsKeyDown(Keys.S))
                     {
                         currentPiece.Rotate(true);
                     }
 
-                    previousState = currentState;
+                    previousKeyState = currentState;
                     #endregion
 
                     #region PadInput
@@ -224,20 +240,20 @@ namespace BlockStack
 
                     if (currentPadState.DPad.Down == ButtonState.Pressed)
                     {
-                        if (currentPiece.position.Y + blockHeight < playFieldBounds.Bottom)
+                        if (currentPiece.position.Y + blockwidth < playFieldBounds.Bottom)
                         {
-                            currentPiece.position.Y += blockHeight;
+                            currentPiece.position.Y += blockwidth;
                         }
                     }
 
                     if (currentPadState.DPad.Left == ButtonState.Pressed)
                     {
-                        currentPiece.position.X -= blockWidth;
+                        currentPiece.position.X -= blockwidth;
                     }
 
                     if (currentPadState.DPad.Right == ButtonState.Pressed)
                     {
-                        currentPiece.position.X += blockWidth;
+                        currentPiece.position.X += blockwidth;
                     }
 
                     if (currentPadState.Buttons.A == ButtonState.Pressed && !(previousPadState.Buttons.A == ButtonState.Pressed))
@@ -282,9 +298,9 @@ namespace BlockStack
             {
                 if (gt.TotalGameTime >= lastTimeDropped.TotalGameTime.Add(new TimeSpan(0, 0, 0, 0, 500)))
                 {
-                    if (currentPiece.position.Y + blockHeight < playFieldBounds.Bottom)
+                    if (currentPiece.position.Y + blockwidth < playFieldBounds.Bottom)
                     {
-                        currentPiece.position.Y += blockHeight;
+                        currentPiece.position.Y += blockwidth;
                         lastTimeDropped = new GameTime(gt.TotalGameTime, gt.ElapsedGameTime);
                     }
                 }
@@ -317,8 +333,14 @@ namespace BlockStack
         {
             currentPiece = nextPiece;
             nextPiece = tetrisPieceFactory.GetNextPiece();
-        }
 
+            // assign location and speed for currentPiece, per levelNumber
+            currentPiece.position.X = offsetPlayFieldX + (5 * blockwidth);
+            currentPiece.position.Y = offsetPlayFieldY + (0 * blockwidth);
+
+
+
+        }
 
         #endregion
 

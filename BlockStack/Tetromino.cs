@@ -1,4 +1,13 @@
-﻿using System;
+﻿///////////////////////////////////////////////////////////////////////////////////////////
+// Tetromino abstract class allows childs classes to model specific Tetromino shapes 
+// (I, J, S, etc)
+//
+// AUTHORS: F1tZ, DoubleMintBen, CptSpaceToaster, Dacle
+// COMPANY: AfterThough Digital
+// STARTED: October, 2014
+//
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -37,12 +46,12 @@ namespace BlockStack
             }
         }
 
-        public virtual void constructPiece(Color tint, int width, int hight, Texture2D texture)
+        public virtual void constructPiece(Color tint, int width, Texture2D texture)
         {
-            blockList.Add(new Block(new Vector2(1f, 1f), tint, width, hight, texture));
-            blockList.Add(new Block(new Vector2(1f, 2f), tint, width, hight, texture));
-            blockList.Add(new Block(new Vector2(2f, 1f), tint, width, hight, texture));
-            blockList.Add(new Block(new Vector2(2f, 2f), tint, width, hight, texture));
+            blockList.Add(new Block(new Vector2(1f, 1f), tint, width, texture));
+            blockList.Add(new Block(new Vector2(1f, 2f), tint, width, texture));
+            blockList.Add(new Block(new Vector2(2f, 1f), tint, width, texture));
+            blockList.Add(new Block(new Vector2(2f, 2f), tint, width, texture));
         }
 
         public abstract void Rotate(bool counterClockwise = true);

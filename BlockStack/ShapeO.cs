@@ -1,4 +1,12 @@
-﻿using System;
+﻿///////////////////////////////////////////////////////////////////////////////////////////
+// ShapeO class is a data type for a tetromino piece
+//
+// AUTHORS: F1tZ, DoubleMintBen, CptSpaceToaster, Dacle
+// COMPANY: AfterThough Digital
+// STARTED: October, 2014
+//
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,12 +18,12 @@ namespace BlockStack
     {
         public List<Block> upDownLeftRight = new List<Block>();
 
-        public override void constructPiece(Microsoft.Xna.Framework.Color tint, int width, int hight, Microsoft.Xna.Framework.Graphics.Texture2D texture)
+        public override void constructPiece(Microsoft.Xna.Framework.Color tint, int width, Microsoft.Xna.Framework.Graphics.Texture2D texture)
         {
-            upDownLeftRight.Add(new Block(new Vector2(1f, 1f), tint, width, hight, texture));
-            upDownLeftRight.Add(new Block(new Vector2(2f, 1f), tint, width, hight, texture));
-            upDownLeftRight.Add(new Block(new Vector2(2f, 2f), tint, width, hight, texture));
-            upDownLeftRight.Add(new Block(new Vector2(1f, 2f), tint, width, hight, texture));
+            upDownLeftRight.Add(new Block(new Vector2(1f, 1f), tint, width, texture));
+            upDownLeftRight.Add(new Block(new Vector2(2f, 1f), tint, width, texture));
+            upDownLeftRight.Add(new Block(new Vector2(2f, 2f), tint, width, texture));
+            upDownLeftRight.Add(new Block(new Vector2(1f, 2f), tint, width, texture));
 
             blockList = upDownLeftRight;
         }

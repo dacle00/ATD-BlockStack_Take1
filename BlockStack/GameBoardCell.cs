@@ -1,4 +1,13 @@
-﻿using System;
+﻿///////////////////////////////////////////////////////////////////////////////////////////
+// GameBoardCell class represents a single block of the gameboard and is used to store 
+// information as to whether a piece has landed within the cell, or not.
+//
+// AUTHORS: F1tZ, DoubleMintBen, CptSpaceToaster, Dacle
+// COMPANY: AfterThough Digital
+// STARTED: October, 2014
+//
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

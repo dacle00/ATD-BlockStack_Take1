@@ -1,4 +1,12 @@
-﻿using System;
+﻿///////////////////////////////////////////////////////////////////////////////////////////
+// GameBoard class holds all the information for played tetromino pieces which have already
+// landed.
+//
+// AUTHORS: F1tZ, DoubleMintBen, CptSpaceToaster, Dacle
+// COMPANY: AfterThough Digital
+// STARTED: October, 2014
+//
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -37,8 +45,8 @@ namespace BlockStack
                     {
                         //TODO:  make this work.  make this make sense.  make this not hideous.
                         //draw the block
-                        b = new Block(new Vector2(x * 32, y * 32), pile[y].row[x].block.tint, 32, 32, pile[y].row[x].block.texture);
-                        sb.Draw(b.texture, new Rectangle(Convert.ToInt16(b.position.X), Convert.ToInt16(b.position.Y), b.width, b.hight), b.tint);
+                        b = new Block(new Vector2(x * 32, y * 32), pile[y].row[x].block.tint, 32, pile[y].row[x].block.texture);
+                        sb.Draw(b.texture, new Rectangle(Convert.ToInt16(b.position.X), Convert.ToInt16(b.position.Y), b.width, b.width), b.tint);
                     }
                 }
 

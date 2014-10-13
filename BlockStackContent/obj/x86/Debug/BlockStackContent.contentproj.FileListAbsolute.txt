@@ -5,3 +5,4 @@ C:\Users\Andrew\Documents\GitHub\BlockStack\BlockStack\BlockStackContent\obj\x86
 C:\Users\F1tZ\Documents\GitHub\BlockStack\BlockStack\BlockStackContent\obj\x86\Debug\BlockStackContent.contentprojResolveAssemblyReference.cache
 F:\Documents\Visual Studio 2010\Projects\GDev\AfterThoughTetris\BlockStack\BlockStack\BlockStackContent\obj\x86\Debug\BlockStackContent.contentprojResolveAssemblyReference.cache
 F:\Documents\Visual Studio 2010\Projects\GDev\AfterThoughTetris\xBlocks\BlockStack_take1\BlockStackContent\obj\x86\Debug\BlockStackContent.contentprojResolveAssemblyReference.cache
+F:\Documents\Visual Studio 2010\Projects\GDev\ATD-BlockStack_Take1\BlockStackContent\obj\x86\Debug\BlockStackContent.contentprojResolveAssemblyReference.cache

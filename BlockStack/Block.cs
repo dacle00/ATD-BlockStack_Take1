@@ -1,4 +1,12 @@
-﻿using System;
+﻿///////////////////////////////////////////////////////////////////////////////////////////
+// Block class represents each square tile within a tetromino.
+//
+// AUTHORS: F1tZ, DoubleMintBen, CptSpaceToaster, Dacle
+// COMPANY: AfterThough Digital
+// STARTED: October, 2014
+//
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +20,6 @@ namespace BlockStack
         public Vector2 position;
         public Color tint;
         public int width;
-        public int hight;
         public Texture2D texture;
         public Rectangle bounding;
 
@@ -21,12 +28,11 @@ namespace BlockStack
 
         }
 
-        public Block(Vector2 position, Color tint, int width, int hight, Texture2D texture)
+        public Block(Vector2 position, Color tint, int width, Texture2D texture)
         {
             this.position = position;
             this.tint = tint;
-            this.width = width;
-            this.hight = hight;
+            this.width= width;
             this.texture = texture;
         }
 
