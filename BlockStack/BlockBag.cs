@@ -34,18 +34,27 @@ namespace BlockStack
             Tetromino nextPiece;
             if (whichCase)
             {
+                // get random piece from suitcase, also transfer that piece to other suitcase
                 int index = rand.Next(0, suitCaseOne.Count());
                 nextPiece = suitCaseOne[index];
                 suitCaseTwo.Add(suitCaseOne[index]);
                 suitCaseOne.RemoveAt(index);
 
+                //toggle when suitcase is empty
+                if (suitCaseOne.Count < 1)
+                    whichCase = !whichCase;
             }
             else
             {
+                // get random piece from suitcase, also transfer that piece to other suitcase
                 int index = rand.Next(0, suitCaseTwo.Count());
                 nextPiece = suitCaseTwo[index];
                 suitCaseOne.Add(suitCaseTwo[index]);
                 suitCaseTwo.RemoveAt(index);
+
+                //toggle when suitcase is empty
+                if (suitCaseTwo.Count < 1)
+                    whichCase = !whichCase;
             }
             return nextPiece;
         }

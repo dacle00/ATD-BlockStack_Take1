@@ -19,7 +19,7 @@ namespace BlockStack
     {
 
         
-        BlockRow[] pile;
+        public BlockRow[] pile;
         int width;
         int height;
 
@@ -32,6 +32,18 @@ namespace BlockStack
             for (int i = 0; i < height; i++)
                 pile[i] = new BlockRow(width);
         }
+
+
+        public void AddLandedPiece(Tetromino t)
+        {
+            // add each block of the Tetromino into the pile's cells
+            foreach (Block b in t.blockList)
+            {
+                pile[Convert.ToInt16(b.position.Y)].row[Convert.ToInt16(b.position.X)].block = b;
+                pile[Convert.ToInt16(b.position.Y)].row[Convert.ToInt16(b.position.X)].isFilled = true;
+            }
+        }
+
 
 
         public void Draw(GameTime gt, SpriteBatch sb)
