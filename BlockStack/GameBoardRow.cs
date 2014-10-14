@@ -16,17 +16,17 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace BlockStack
 {
-    class BlockRow
+    class GameBoardRow
     {
 
-        public GameBoardCell[] row;
+        public GameBoardCell[] data;
 
-        public BlockRow(int width)
+        public GameBoardRow(int width)
         {
-            row = new GameBoardCell[width];
+            data = new GameBoardCell[width];
 
             for (int i = 0; i<width; i++)
-                row[i] = new GameBoardCell();
+                data[i] = new GameBoardCell();
 
         }
 

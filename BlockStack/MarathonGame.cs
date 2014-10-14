@@ -415,7 +415,7 @@ namespace BlockStack
                 }
 
                 // case #2.
-                else if (theBoard.pile[yPos + 1].row[xPos].isFilled)
+                else if (theBoard.pile[yPos + 1].data[xPos].isFilled)
                 {
                     //LANDED ON ANOTHER PIECE
                     pieceState = PieceState.landed;

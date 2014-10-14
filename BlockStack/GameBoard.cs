@@ -17,9 +17,8 @@ namespace BlockStack
 {
     class GameBoard
     {
-
         
-        public BlockRow[] pile;
+        public GameBoardRow[] pile;
         int width;
         int height;
 
@@ -28,9 +27,9 @@ namespace BlockStack
         {
             width = w;
             height = h;
-            pile = new BlockRow[height];
+            pile = new GameBoardRow[height];
             for (int i = 0; i < height; i++)
-                pile[i] = new BlockRow(width);
+                pile[i] = new GameBoardRow(width);
         }
 
 
@@ -39,8 +38,8 @@ namespace BlockStack
             // add each block of the Tetromino into the pile's cells
             foreach (Block b in t.blockList)
             {
-                pile[Convert.ToInt16(b.position.Y)].row[Convert.ToInt16(b.position.X)].block = b;
-                pile[Convert.ToInt16(b.position.Y)].row[Convert.ToInt16(b.position.X)].isFilled = true;
+                pile[Convert.ToInt16(b.position.Y)].data[Convert.ToInt16(b.position.X)].block = b;
+                pile[Convert.ToInt16(b.position.Y)].data[Convert.ToInt16(b.position.X)].isFilled = true;
             }
         }
 
@@ -53,11 +52,11 @@ namespace BlockStack
             for (int y=0; y < height; y++)
                 for (int x = 0; x < width; x++)
                 {
-                    if (pile[y].row[x].isFilled)
+                    if (pile[y].data[x].isFilled)
                     {
                         //TODO:  make this work.  make this make sense.  make this not hideous.
                         //draw the block
-                        b = new Block(new Vector2(x * 32, y * 32), pile[y].row[x].block.tint, 32, pile[y].row[x].block.texture);
+                        b = new Block(new Vector2(x * 32, y * 32), pile[y].data[x].block.tint, 32, pile[y].data[x].block.texture);
                         sb.Draw(b.texture, new Rectangle(Convert.ToInt16(b.position.X), Convert.ToInt16(b.position.Y), b.width, b.width), b.tint);
                     }
                 }
