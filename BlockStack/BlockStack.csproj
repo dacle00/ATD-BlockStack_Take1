@@ -109,6 +109,7 @@
   <ItemGroup>
     <Compile Include="Block.cs" />
     <Compile Include="BlockBag.cs" />
+    <Compile Include="CountdownTimer.cs" />
     <Compile Include="GameBoardRow.cs" />
     <Compile Include="GameBoard.cs" />
     <Compile Include="MarathonGame.cs" />

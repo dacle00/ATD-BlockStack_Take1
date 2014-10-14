@@ -46,6 +46,8 @@ namespace BlockStack
         Vector2 nextPieceDisplayPosition = new Vector2(376f, 116f); //within the box, the 4x4 grid is displayed plus a 16 pixel padding on each side;
         const int blockwidth = 32;  //got rid of separate width/height vars as we're dealing with squares, right???
         BlockBag tetrisPieceFactory;  //gives another "random" tetris piece, used to get next pieces.
+        CountdownTimer pieceLandedTimer;
+        int pieceLandedPauseTime = 10000; // milliseconds  is
 
         // Leveling/Score
         int levelNumber;
@@ -77,8 +79,6 @@ namespace BlockStack
         }
         PieceState pieceState;
 
-        ///////////////////////////////////////////////////////////////////////////////////////////
-        // New MarathonGame constructor - 
 
         public MarathonGame(int pLevel, ContentManager pContentManager)
         {
@@ -95,6 +95,8 @@ namespace BlockStack
 
             gameState = GameState.running;
             pieceState = PieceState.none;
+
+            pieceLandedTimer = new CountdownTimer();
         }
 
 
@@ -173,29 +175,62 @@ namespace BlockStack
             {
                 // game play is running
 
-                if (currentPiece != null)
+                if (pieceState == PieceState.falling)
                 {
+                    if (currentPiece != null)
+                    {
 
-                    // check user input
-                    UpdateUserInput(gt);
+                        // check user input
+                        UpdateUserInput(gt);
 
-                    // timer drops the piece
-                    UpdatePieceDrop(gt);
+                        // timer drops the piece
+                        UpdatePieceDrop(gt);
 
-                    // Collision Checks
-                    CheckCurrentPieceLanded();
-                    CheckLineClear();
+                        // Collision Checks
+                        CheckCurrentPieceLanded(gt);
+                        CheckLineClear();  //TODO:  move this call to happen when piece is landed.
+                    }
+                    else
+                    {
+                        // Cycle to next piece.
+                        CycleNextPiece();
+                    }
+                    // update Scores
+                    UpdateScore(0);
+
+                    //TODO:  Other MetaData to update?  piece tallies, time display, etc
                 }
-                else
+                else if (pieceState == PieceState.landed)
                 {
-                    // Cycle to next piece.
+                    /* TODO:
+                     * check if a timer is currently running. (some sort of decrementing timer)
+                     * * if there is no currently running timer, start timer until piece locks into place, leave time for a rotation or sideways movement.
+                     * * if there is a running timer, check user input.
+                     * when timer runs out, set it to 0 or null, not running. Also, lock piece into place and cycle to next piece.
+                    */
+                    if (!pieceLandedTimer.isActive)
+                        pieceLandedTimer.setAndStart(gt, pieceLandedPauseTime);
+                    else
+                    {
+                        UpdateUserInput(gt);
+                        pieceLandedTimer.checkExpired(gt);
+                    }
+
+                    if (pieceLandedTimer.isComplete)
+                    {
+                        pieceLandedTimer.reset();
+                        pieceState = PieceState.none;
+
+                    }
+
+
+                }
+                else if (pieceState == PieceState.none)
+                {
+                    if (currentPiece != null)
+                        theBoard.AddLandedPiece(currentPiece);
                     CycleNextPiece();
                 }
-                // update Scores
-                UpdateScore(0);
-
-                //TODO:  Other MetaData to update?  piece tallies, time display, etc
-
             }
             else if (gameState == GameState.paused)
             {
@@ -392,38 +427,32 @@ namespace BlockStack
         }
 
 
-        public void CheckCurrentPieceLanded()
+        /// <summary>
+        /// Checks below currentPiece for collision with bottom of board, or with another landed piece.
+        /// </summary>
+        public void CheckCurrentPieceLanded(GameTime gt)
         {
-
-
+            //examine each sub-block within currentPiece
             foreach (Block b in currentPiece.blockList)
             {
                 //determine sub-block's position relative to tetrominos position
                 int xPos = Convert.ToInt16(currentPiece.boardPosition.X + b.position.X);
                 int yPos = Convert.ToInt16(currentPiece.boardPosition.Y + b.position.Y);
 
-                // examine the boardposition below the piece to see if we've landed. There are two landing conditions:
-                // case #1. If the bottom of the board
-                // case #2. If a cell that already contains a piece
-
-                // case #1.
+                // case #1.  LANDED ON BOTTOM
                 if (yPos >= boardHeight - 1)
                 {
-                    //LANDED ON BOTTOM
-                    theBoard.AddLandedPiece(currentPiece);
-                    CycleNextPiece();
+                    pieceState = PieceState.landed;
+                    pieceLandedTimer.setAndStart(gt, pieceLandedPauseTime);
                 }
 
-                // case #2.
+                // case #2.  LANDED ON ANOTHER PIECE
                 else if (theBoard.pile[yPos + 1].data[xPos].isFilled)
                 {
-                    //LANDED ON ANOTHER PIECE
                     pieceState = PieceState.landed;
-
+                    pieceLandedTimer.setAndStart(gt, pieceLandedPauseTime);
                 }
-
             }
-
         }
 
 

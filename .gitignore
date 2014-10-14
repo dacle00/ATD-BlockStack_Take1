@@ -17,3 +17,5 @@ BlockStack/BlockStackContent/obj/x86/Debug/BlockStackContent.contentproj.FileLis
 BlockStack/BlockStackContent/obj/x86/Debug/BlockStackContent.contentproj.FileListAbsolute.txt
 BlockStack/BlockStackContent/obj/x86/Debug/BlockStackContent.contentproj.FileListAbsolute.txt
 OpenGame/obj/Debug/OpenGame.csproj.FileListAbsolute.txt
+*.exe
+*.pdb

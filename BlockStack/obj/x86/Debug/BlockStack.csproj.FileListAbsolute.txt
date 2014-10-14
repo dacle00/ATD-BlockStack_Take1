@@ -182,7 +182,6 @@ F:\Documents\Visual Studio 2010\Projects\GDev\ATD-BlockStack_Take1\BlockStack\bi
 F:\Documents\Visual Studio 2010\Projects\GDev\ATD-BlockStack_Take1\BlockStack\bin\x86\Debug\Content\ScoreFont.xnb
 F:\Documents\Visual Studio 2010\Projects\GDev\ATD-BlockStack_Take1\BlockStack\bin\x86\Debug\BlockStack.exe
 F:\Documents\Visual Studio 2010\Projects\GDev\ATD-BlockStack_Take1\BlockStack\bin\x86\Debug\BlockStack.pdb
-F:\Documents\Visual Studio 2010\Projects\GDev\ATD-BlockStack_Take1\BlockStack\obj\x86\Debug\BlockStack.csprojResolveAssemblyReference.cache
 F:\Documents\Visual Studio 2010\Projects\GDev\ATD-BlockStack_Take1\BlockStack\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
 F:\Documents\Visual Studio 2010\Projects\GDev\ATD-BlockStack_Take1\BlockStack\obj\x86\Debug\BlockStack.exe
 F:\Documents\Visual Studio 2010\Projects\GDev\ATD-BlockStack_Take1\BlockStack\obj\x86\Debug\BlockStack.pdb
