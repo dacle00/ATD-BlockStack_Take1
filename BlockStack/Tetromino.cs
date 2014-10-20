@@ -71,68 +71,6 @@ namespace BlockStack
             rotation = ListOfRotations[currIndex];
         }
 
-        /// <summary>
-        /// using the bounds in the parameter, check each block of the piece to see if that block can move Left
-        /// </summary>
-        /// <returns></returns>
-        public bool CanMoveLeft(int minXPos)
-        {
-            bool retVal = true;
-
-            foreach (Block b in blockList)
-            {
-                //determine sub-block's position relative to tetrominos position
-                int xPos = Convert.ToInt16(boardPosition.X + b.position.X);
-
-                if ((xPos - 1) < minXPos)
-                    retVal = false;
-            }
-
-            return retVal;
-        }
-
-
-        /// <summary>
-        /// using the bounds in the parameter, check each block of the piece to see if that block can move Left
-        /// </summary>
-        /// <returns></returns>
-        public bool CanMoveRight(int maxXPos)
-        {
-            bool retVal = true;
-
-            foreach (Block b in blockList)
-            {
-                //determine sub-block's position relative to tetrominos position
-                int xPos = Convert.ToInt16(boardPosition.X + b.position.X);
-
-                if ((xPos + 1) > maxXPos)
-                    retVal = false;
-            }
-
-            return retVal;
-        }
-
-
-        /// <summary>
-        /// using the bounds in the parameter, check each block of the piece to see if that block can move Left
-        /// </summary>
-        /// <returns></returns>
-        public bool CanMoveDown(int maxYPos)
-        {
-            bool retVal = true;
-
-            foreach (Block b in blockList)
-            {
-                //determine sub-block's position relative to tetrominos position
-                int yPos = Convert.ToInt16(boardPosition.Y + b.position.Y);
-
-                if ((yPos + 1) > maxYPos)
-                    retVal = false;
-            }
-
-            return retVal;
-        }
-
 
     }
 }

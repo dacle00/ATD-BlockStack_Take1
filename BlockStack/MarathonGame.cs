@@ -84,7 +84,7 @@ namespace BlockStack
         {
             boardWidth = 10;  // Standard board width (number of cells).
             boardHeight = 20; // Standard board height (number of cells).
-            theBoard = new GameBoard(boardWidth, boardHeight);
+            theBoard = new GameBoard(boardWidth, boardHeight, offsetPlayFieldX, offsetPlayFieldY);
             levelNumber = pLevel;
             stepTime = 0.5f - (0.05f * (levelNumber - 1));
             Load(pContentManager);
@@ -220,7 +220,7 @@ namespace BlockStack
                     {
                         pieceLandedTimer.reset();
                         pieceState = PieceState.none;
-
+                        //TODO:  check if piece is now un-landed (moved sideways off of whatever piece was below itself)
                     }
 
 
@@ -259,7 +259,7 @@ namespace BlockStack
                     if (currentState.IsKeyDown(Keys.Left) && !previousKeyState.IsKeyDown(Keys.Left))
                     {
                         //move piece left if, once moved, piece would remain inside GameBoard
-                        if (currentPiece.CanMoveLeft(0))
+                        if (CanMoveLeft())
                         {
                             // move piece left 
                             currentPiece.screenPosition.X -= blockwidth;
@@ -272,7 +272,7 @@ namespace BlockStack
                     }
                     if (currentState.IsKeyDown(Keys.Right) && !previousKeyState.IsKeyDown(Keys.Right))
                     {
-                        if (currentPiece.CanMoveRight(boardWidth-1))
+                        if (CanMoveRight())
                         {
                             // move piece right 
                             currentPiece.screenPosition.X += blockwidth;
@@ -285,7 +285,7 @@ namespace BlockStack
                     }
                     if (currentState.IsKeyDown(Keys.Down) && !previousKeyState.IsKeyDown(Keys.Down))
                     {
-                        if (currentPiece.CanMoveDown(boardHeight-1))
+                        if (CanMoveDown())
                         {
                             // move piece down
                             currentPiece.screenPosition.Y += blockwidth;
@@ -317,7 +317,7 @@ namespace BlockStack
                     if (currentPadState.DPad.Left == ButtonState.Pressed)
                     {
                         //move piece left if, once moved, piece would remain inside GameBoard
-                        if (currentPiece.CanMoveLeft(0))
+                        if (CanMoveLeft())
                         {
                             // move piece left 
                             currentPiece.screenPosition.X -= blockwidth;
@@ -331,8 +331,8 @@ namespace BlockStack
 
                     if (currentPadState.DPad.Right == ButtonState.Pressed)
                     {
-                        //move piece left if, once moved, piece would remain inside GameBoard
-                        if (currentPiece.CanMoveLeft(0))
+                        //move piece right if, once moved, piece would remain inside GameBoard
+                        if (CanMoveRight())
                         {
                             // move piece right 
                             currentPiece.screenPosition.X += blockwidth;
@@ -348,7 +348,7 @@ namespace BlockStack
                     {
                         if (currentPiece.screenPosition.Y + blockwidth < playFieldBounds.Bottom)
                         {
-                            if (currentPiece.CanMoveDown(boardHeight))
+                            if (CanMoveDown())
                             {
                                 // move piece down
                                 currentPiece.screenPosition.Y += blockwidth;
@@ -406,7 +406,7 @@ namespace BlockStack
                 {
                     if (currentPiece.screenPosition.Y + blockwidth < playFieldBounds.Bottom)
                     {
-                        if (currentPiece.CanMoveDown(boardHeight-1))
+                        if (CanMoveDown())
                         {
                             // move piece down
                             currentPiece.screenPosition.Y += blockwidth;
@@ -424,6 +424,85 @@ namespace BlockStack
             {
                 lastTimeDropped = new GameTime(gt.TotalGameTime, gt.ElapsedGameTime);
             }
+        }
+
+
+        /// <summary>
+        /// using the bounds in the parameter, check each block of the piece to see if that block can move Left
+        /// </summary>
+        /// <returns></returns>
+        public bool CanMoveLeft()
+        {
+            bool retVal = true;
+
+            foreach (Block b in currentPiece.blockList)
+            {
+                //determine sub-block's position relative to tetrominos position
+                int xPos = Convert.ToInt16(currentPiece.boardPosition.X + b.position.X);
+                int yPos = Convert.ToInt16(currentPiece.boardPosition.Y + b.position.Y);
+
+                //check bounds of gameboard
+                if ((xPos - 1) < 0)
+                    retVal = false;
+                //check for other pieces
+                else if (theBoard.pile[yPos].data[xPos - 1].isFilled)
+                    retVal = false;
+            }
+
+            return retVal;
+        }
+
+
+        /// <summary>
+        /// using the bounds in the parameter, check each block of the piece to see if that block can move Left
+        /// </summary>
+        /// <returns></returns>
+        public bool CanMoveRight()
+        {
+            bool retVal = true;
+
+            foreach (Block b in currentPiece.blockList)
+            {
+                //determine sub-block's position relative to tetrominos position
+                int xPos = Convert.ToInt16(currentPiece.boardPosition.X + b.position.X);
+                int yPos = Convert.ToInt16(currentPiece.boardPosition.Y + b.position.Y);
+
+                //check bounds of gameboard
+                if ((xPos + 1) > (boardWidth - 1))
+                    retVal = false;
+                //check for other pieces
+                else if (theBoard.pile[yPos].data[xPos + 1].isFilled)
+                    retVal = false;
+            }
+
+            return retVal;
+        }
+
+
+        /// <summary>
+        /// using the bounds in the parameter, check each block of the piece to see if that block can move Left
+        /// </summary>
+        /// <returns></returns>
+        public bool CanMoveDown()
+        {
+            bool retVal = true;
+
+            foreach (Block b in currentPiece.blockList)
+            {
+                //determine sub-block's position relative to tetrominos position
+                int xPos = Convert.ToInt16(currentPiece.boardPosition.X + b.position.X);
+                int yPos = Convert.ToInt16(currentPiece.boardPosition.Y + b.position.Y);
+
+                //check gameboard's bounds
+                if ((yPos + 1) > (boardHeight - 1))
+                    retVal = false;
+                //check for other pieces
+                else if (theBoard.pile[yPos + 1].data[xPos].isFilled)
+                    retVal = false;
+
+            }
+
+            return retVal;
         }
 
 
